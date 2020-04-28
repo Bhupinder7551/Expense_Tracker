@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import Todo from './Component/ToDo.js';
-//import Mern from './Component/Mern.js';
-import List from './Component/List.js';
+import Mern from './Component/Mern.js';
+//import List from './Component/List.js';
 
 
 
@@ -28,11 +28,12 @@ class App extends Component {
                 <h1>Impossible</h1>
                 {//<Todo />
 
-                    //<Mern />
                 }
+                <Mern />
                 
-                <List />
                 
+                {// <List />
+                }
             </div>
         )
     }

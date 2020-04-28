@@ -1,11 +1,16 @@
+const mongoose = require('mongoose');
 
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+// Schema
+const Schema = mongoose.Schema;
+const BlogPostSchema = new Schema({
+    title: String,
+    author:String,
+    body: String,
+    
+});
 
-// Create Schema
-const TaskSchema = new Schema({
-    task_name: String
-})
+// Model
+const BlogPost = mongoose.model('BlogPost', BlogPostSchema);
 
-module.exports = User = mongoose.model('tasks', TaskSchema)
+module.exports =  BlogPost;
