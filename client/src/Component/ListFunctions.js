@@ -11,7 +11,7 @@ export const getList = () => {
                 var val = res.data[key]
                 data.push([val.task_name, val._id])
             })
-
+        
             return data
         })
 }
