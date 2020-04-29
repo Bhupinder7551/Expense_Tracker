@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//import Todo from './Component/ToDo.js';
-import Mern from './Component/Mern.js';
-//import List from './Component/List.js';
+import Self from './Component/SelfPractice.js'
 
 
 
@@ -24,16 +22,12 @@ class App extends Component {
 
         return (
 
-            <div>
+            <div >
                 <h1>Impossible</h1>
-                {//<Todo />
-
-                }
-                <Mern />
+             
+             <Self />
+                                   
                 
-                
-                {// <List />
-                }
             </div>
         )
     }

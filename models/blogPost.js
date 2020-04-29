@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const BlogPostSchema = new Schema({
     title: String,
-    author:String,
+    author: String,
     body: String,
-    
+    task_name: String
+
 });
 
 // Model
-const BlogPost = mongoose.model('BlogPost', BlogPostSchema);
+const BlogPost = mongoose.model('blogposts', BlogPostSchema);
 
-module.exports =  BlogPost;
+module.exports = BlogPost;
