@@ -1,7 +1,7 @@
-// JavaScript source code
+
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Card, Button, Icon, Input } from 'semantic-ui-react'
+import { Card, Button, Icon, Input, TextArea } from 'semantic-ui-react'
 
 
 class Self extends Component {
@@ -10,9 +10,12 @@ class Self extends Component {
         super(props);
         this.state = {
             title: '',
+            author: '',
+            body: '',
             task_name: '',
             items: [],
-            editData: ''
+            editData: '',
+            id: ''
 
 
         }
@@ -21,19 +24,7 @@ class Self extends Component {
         this.getAll()
     }
 
-    //getAll = () => {
-    //    getList().then(data => {
-    //        this.setState(
-    //            {
-    //                term: '',
-    //                items: data
-    //            },
-    //            () => {
-    //                console.log(this.state.items)
-    //            }
-    //        )
-    //    })
-    //}
+
 
     getAll = () => {
 
@@ -64,6 +55,8 @@ class Self extends Component {
         const payload = {
             title: this.state.title,
             task_name: this.state.task_name,
+            author: this.state.author,
+            body: this.state.body,
 
 
         };
@@ -87,23 +80,12 @@ class Self extends Component {
     resetUserInputs = () => {
         this.setState({
             title: '',
-            task_name: ''
+            task_name: '',
+            author: '',
+            body: ''
         });
     };
-    //onDelete = (term) => {
 
-    //    deleteItem(term)
-
-    //    var data = this.state.items
-    //    data.filter((item, index) => {
-    //        if (item[1] === term) {
-    //            data.splice(index, 1)
-    //        }
-    //        return true
-    //    })
-    //    this.setState({ items: data })
-
-    //}
     onDelete(id) {
         console.log("deleted item is", id)
         axios.delete('api/task/' + id)
@@ -114,10 +96,10 @@ class Self extends Component {
                 console.log(error)
             })
     }
-    onUpdate = (term, id, e) => {
+    onUpdate = (id, task_name, title, author, body, e) => {
         e.preventDefault()
-
-        axios.put(`api/task/${id}`,{ task_name: term })
+        const updatedValue = { task_name: task_name, title: title, author: author, body: body }
+        axios.put(`api/task/${id}`, updatedValue)
             .then((res) => {
                 console.log(res.data)
                 console.log('Student successfully updated')
@@ -128,12 +110,16 @@ class Self extends Component {
             })
 
     }
- 
-    onEdit = (item, id, e) => {
+
+    onEdit = (task_name, id, title, author, body, e) => {
         e.preventDefault()
         this.setState({
             id: id,
-            task_name: item
+            task_name: task_name,
+            title: title,
+            author: author,
+            body: body
+
 
         })
 
@@ -151,10 +137,12 @@ class Self extends Component {
                     <Icon
                         onClick={this.onDelete.bind(this, post._id)} style={{ float: 'left', color: 'red' }} className="ui delete icon" />
                     <Icon
-                        onClick={this.onEdit.bind(this, post.task_name, post._id
+                        onClick={this.onEdit.bind(this, post.task_name, post._id, post.title, post.author, post.body
                         )} style={{ float: 'right', color: 'green' }} className="ui edit icon" />
 
                     <p style={{ float: 'center' }}>{`${post.task_name}____${post.title}`}</p>
+                    <p >{post.author}</p>
+                    <p >{post.body}</p>
                 </div>
             </Card>
         ));
@@ -164,10 +152,11 @@ class Self extends Component {
 
 
 
-
+        const data = this.state
         return (
 
             <div>
+
                 <form onSubmit={this.submit}>
 
                     <div className="form-input">
@@ -190,10 +179,30 @@ class Self extends Component {
                         />
 
                     </div>
+                    <div className="form-input">
+                        <Input
+                            type='text'
+                            name='author'
+                            placeholder='Enter Author name'
+                            value={this.state.author}
+                            onChange={this.handleChange}
+                        />
+
+                    </div>
+                    <div className="form-input">
+                        <Input
+                            type='text'
+                            name='body'
+                            placeholder='Enter body details'
+                            value={this.state.body}
+                            onChange={this.handleChange}
+                        />
+
+                    </div>
                     <br />
 
                     <Button
-                        onClick={this.onUpdate.bind(this, this.state.task_name, this.state.id)}
+                        onClick={this.onUpdate.bind(this, data.id, data.task_name, data.title, data.author, data.body)}
                     >
                         Update
                 </Button>

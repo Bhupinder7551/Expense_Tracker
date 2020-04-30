@@ -56,7 +56,7 @@ const express = require('express');
 const app = express();
 const BlogPost = require('../models/blogPost');
 
-app.get('/tasks',  (req, res)=> {
+app.get('/tasks', (req, res) => {
     BlogPost.find()
         .then(tasks => {
             res.json(tasks)
@@ -66,25 +66,9 @@ app.get('/tasks',  (req, res)=> {
         })
 })
 
-//app.get('/task/:id', function (req, res, next) {
-//    Task.findOne({
-//        where: {
-//            id: req.params.id
-//        }
-//    })
-//        .then(task => {
-//            if (task) {
-//                res.json(task)
-//            } else {
-//                res.send('Task does not exist')
-//            }
-//        })
-//        .catch(err => {
-//            res.send('error: ' + err)
-//        })
-//})
 
-app.post('/task',  (req, res)=> {
+
+app.post('/task', (req, res) => {
     if (!req.body.task_name) {
         res.status(400)
         res.json({
@@ -111,7 +95,7 @@ app.delete('/task/:id', (req, res) => {
         })
 })
 
-app.put('/task/:id',  (req, res)=> {
+app.put('/task/:id', (req, res) => {
     if (!req.body.task_name) {
         res.status(400)
         res.json({
@@ -120,7 +104,14 @@ app.put('/task/:id',  (req, res)=> {
     } else {
         BlogPost.findOneAndUpdate(
             { _id: req.params.id },
-            { task_name: req.body.task_name }
+            {
+                title: req.body.title,
+                task_name: req.body.task_name,
+                author: req.body.author,
+                body: req.body.body
+            }
+         
+
         )
             .then(() => {
                 res.json({ status: 'Task Updated!' })
